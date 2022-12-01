@@ -1,38 +1,66 @@
-url = 'Arquivos/ref.txt'
+import random
+import string
+
+url = 'Arquivos/conjuntos.txt'
 #url = input("URL: ")
 
-numArq = []
+def tratar_texto(word):
+    word = word.replace('\n', '')
+    word = word.replace('.', '')
+    word = word.replace(',', '')
+    word = word.replace('!', '')
+    word = word.replace('?', '')
 
-dicio_palavra = {}
+    with open('Arquivos/desconsideradas.txt', 'r') as desc:
+        execoes = desc.readlines()
 
-count_link = 1
+        for i in execoes:
+            i = i.replace('\n', '')
+
+            if word == i:
+                return ''
+        
+        return word
+
+
 
 with open(url, "r") as f:  
+    lista_arq = []
+    count_arq = 0
 
-    
-    for link in f: 
-        link = link.replace("\n", "")
-        arq = open(link, 'r')
+    for link in f:
+        palavras = {}
+        link = link.replace('\n', '')
+        arquivos = open(link, 'r')
+        
+        for linhas in arquivos.readlines():
+            for word in linhas.split():
+                word = tratar_texto(word)
 
-        for linha in arq:
-            for palavra in linha.split():
-                palavra = palavra.replace("\n", "")
-                palavra = palavra.replace(".", "")
-                palavra = palavra.replace(",", "")
-                palavra = palavra.replace("!", "")
-                palavra = palavra.replace("?", "")
-                
-                if palavra in dicio_palavra.keys():
-                    dicio_palavra[palavra] = {
-                        "quaisArq": numArq.__add__(count_link),
-                        "qtd": dicio_palavra[palavra]["qtd"]+1
-                    }
-                else:
-                    dicio_palavra[palavra] = {
-                        "quaisArq": numArq.append(count_link),
-                        "qtd": 1
-                    }
+                if word != '':
+                    if word in palavras.keys():
+                        palavras[word] += 1
+                    else:
+                        palavras[word] = 1
+        
+        lista_arq.append(palavras.copy())         
+        count_arq+=1
 
-        count_link+=1            
 
-    print(dicio_palavra)
+
+dicFinal = {}
+count = 1
+for arq in lista_arq:
+    for elemento, valor in arq.items():
+        if elemento in dicFinal.keys():
+            dicFinal[elemento] = dicFinal[elemento] + f' {count},{valor}'
+        else:
+            dicFinal[elemento] = f'{count},{valor}'
+    count+=1
+
+
+
+
+with open('Saidas/indice.txt', 'w') as indice:
+    for elemento, valor in sorted(dicFinal.items()):
+        indice.write(f'{elemento}: {valor}\n')
