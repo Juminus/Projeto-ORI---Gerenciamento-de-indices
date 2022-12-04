@@ -63,8 +63,9 @@ def geraIndice(lista_arq):
     with open('Saidas/indice.txt', 'w') as indice: #Cria o arquivo índice
         for elemento, valor in sorted(dicFinal.items()): #Ordena e adiciona as palavras, em qual arquivo e quantas vezes apareceu
             indice.write(f'{elemento}: {valor}\n')
-
     return dicFinal
+
+
 
 def consulta(dic, consu, url):
     list = [] #Declara uma lista
@@ -75,8 +76,7 @@ def consulta(dic, consu, url):
                 count_cons += 1 #Incrementa um na quantidade de palavras a serem consultadas
                 if palavras in dic.keys(): #Se a palavra a ser consultada estiver no dicionário
                     for arq in dic[palavras].split(): #Para cada arquivo que a palavra apareceu
-                        list.append(arq[0]) #Adiciona o arquivo na lista
-                        
+                        list.append(arq[0]) #Adiciona o arquivo na lista                        
     list_unicos = set(list) #Declara uma lista sem repetir os arquivos
     list_f = [] #Declara uma lista vazia
     for elemento in list_unicos: #Para cada arquivo com as palavras consultada 
