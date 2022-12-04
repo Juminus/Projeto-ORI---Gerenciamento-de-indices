@@ -1,3 +1,4 @@
 Arquivos/arq1.txt
 Arquivos/arq2.txt
 Arquivos/arq3.txt
+Arquivos/arqExtra.txt
