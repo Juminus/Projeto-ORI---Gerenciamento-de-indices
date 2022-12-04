@@ -1,0 +1,5 @@
+Caminhos dos arquivos: 
+
+Arquivos/conjuntos.txt
+Arquivos/desconsideradas.txt
+Arquivos/consulta.txt
